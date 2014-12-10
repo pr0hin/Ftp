@@ -1,3 +1,21 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  Ftp.c
+ *
+ *    Description:  Entry point for the FTP server
+ *
+ *        Version:  1.0
+ *        Created:  12/07/2014 08:33:29 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Rohin Patel (), rohinjpatel@gmail.com
+ *   Organization:  
+ *
+ * =====================================================================================
+ */
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,7 +77,7 @@ int parse_command(char * buf){
     int len = strlen(buf);
     for (i=0; i<len; ++i) {
         if ((buf[i] == ' ') || ((buf[i] == '\r') && (buf[i+1] == '\n'))){
-            char * arg = (char *) calloc(i+1, sizeof(char));
+            char * arg = calloc(i+1, sizeof(char));
             strncpy(arg,&buf[0], i);	
             //(char*)mempcpy((arg+i),nul,1);
             args[n]=(char*)arg;
@@ -151,6 +169,8 @@ int main (void) {
         parse_command(buf);
         memset(buf,'\0', 160);
         if ((bytes_received = recv(client, &buf[0], LIMIT, 0)) == 0) {
+		// TODO need to deal with potential buffer overflow and making
+		// sure that the entire packet is received.
             fprintf(stderr, "Receive error %s\n", gai_strerror(bytes_received));
             exit(6);
         }

@@ -8,6 +8,7 @@ OBJ=Ftp.o Commands.o Hashtable.o Structs.o
 
 ftp: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
+	rm *.o
 
 clean: 
 	rm *.o ftp

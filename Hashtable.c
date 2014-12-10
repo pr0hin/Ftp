@@ -74,6 +74,9 @@ int retrieve(char * cmd) {
         for (j = 0; j < 10; ++j) {
             i = indx(cmd, j);
             struct function *f = hashtable[i]; 
+	    if (!f) {
+		continue;
+	    }
             int status;
             if ((status = strcmp(cmd, f->name)) == 0) {
                 return i;
